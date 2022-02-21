@@ -5,6 +5,7 @@ from .forms import HelloForm
 # Create your views here.
 
 #ここからGitHubを使用する。2022-02-21
+#  p105まで、済み。
 
 def index(request):
     params = {
