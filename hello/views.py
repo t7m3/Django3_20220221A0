@@ -4,6 +4,8 @@ from .forms import HelloForm
 
 # Create your views here.
 
+#ここからGitHubを使用する。2022-02-21
+
 def index(request):
     params = {
         'title':'Hello',
