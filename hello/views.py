@@ -10,19 +10,19 @@ class HelloView(TemplateView):
     def __init__(self):
         self.params = {
             'title':'Hello',
-            'message':'your data:',
-            'form':HelloForm()
+            
+            'form':HelloForm(),
+            'result':''
         }
 
     def get(self, request):
         return render(request, 'hello/index.html', self.params)
 
     def post(self, request):
-        msg = 'あなたは、<b>' + request.POST['name'] + \
-            '(' + request.POST['age'] + \
-            ')</b>さんです。<br>メールアドレスは <b>' + request.POST['mail'] + \
-            '</b>ですね。'
-        self.params['message'] = msg
+        if ('check' in request.POST):
+            self.params['result'] = 'Checked!!'
+        else:
+            self.params['result'] = 'not checked...'
         self.params['form'] = HelloForm(request.POST)
         return render(request, 'hello/index.html', self.params)
 
