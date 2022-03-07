@@ -16,7 +16,7 @@
     <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
         <table>
-        {{result}}
+        {{result | linebreaksbr}} <!-- linebreaksbrとすると、\nで改行するらしい。-->
         {{ form.as_p }}
         <tr><td></td><td>
         <input class="btn btn-primary my-2" type="submit" value="click">

@@ -20,10 +20,10 @@ class HelloView(TemplateView):
 
     def post(self, request):
         ch = request.POST.getlist('choice')
-        result = '<ol class="list-group"><b>selected:</b>'
+        result = 'selected:\n'  # index.htmlを{{result | linebreaksbr}}と変更しないと、改行しない。
         for item in ch:
-            result += '<li class="list-group-item">' + item + '</li>'
-        result += '</ol>'
+            result += '  ・'  + item + '\n'
+        # result += '\n'
         self.params['result'] = result
         self.params['form'] = HelloForm(request.POST)
         return render(request, 'hello/index.html', self.params)
