@@ -5,22 +5,34 @@
     <meta charset="utf-8">
     <title>{{title}}</title>
     <link rel="stylesheet"
-    rel="https://stackpass.bootstrapcdn.com/bootstrap/4.3.1/css/
-    bootstrap.min.css"
-    crossorigin="anoymous">
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    crossorigin="anonymous">
 </head>
 
 <body class="container">
     <h1 class="display-4 text-primary">{{title}}</h1>
     <p class="h5 mt-4">{{message|safe}}</p>
-    <form action="{% url 'index' %}" method="post">
-        {% csrf_token %}
-        <table>
-        {{result | linebreaksbr}} <!-- linebreaksbrとすると、\nで改行するらしい。-->
-        {{ form.as_p }}
-        <tr><td></td><td>
-        <input class="btn btn-primary my-2" type="submit" value="click">
-        </table>
-    </form>
+
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>GENDER</th>
+            <th>MAIL</th>
+            <th>AGE</th>
+            <th>BIRTHDAY</th>
+        </tr>
+    {% for item in data %}
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{% if item.gender == False %}male{% endif %}
+            {% if item.gender == True %}female{% endif %}</td>
+            <td>{{item.mail}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.birthday}}</td>
+        </tr>
+    {% endfor %}
+    </table>
 </body>
 </html>
