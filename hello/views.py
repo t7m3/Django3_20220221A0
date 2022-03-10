@@ -5,7 +5,10 @@ from .models import Friend
 # Create your views here.
 
 def index(request):
-    data = Friend.objects.all().values('id', 'name')
+    num = Friend.objects.all().count()
+    first = Friend.objects.all().first()
+    last = Friend.objects.all().last()
+    data = [num, first, last]
     params = {
         'title':'Hello',
         'data': data,
