@@ -8,21 +8,16 @@
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     crossorigin="anonymous">
 </head>
-
 <body class="container">
     <h1 class="display-4 text-primary">
-        {{title}}</h1>
-    <!-- <p class="h6 mt-4">{{data}}</p> -->
-
-    <table class="table">
-        <tr>
-            <th>data</th>
-        </tr>
-    {% for item in data %}
-        <tr>
-            <td>{{item}}</td>
-        </tr>
-    {% endfor %}
-    </table>
+        {{title}}
+    </h1>
+    <form action="{% url 'create' %}"
+        method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="click"
+            class="btn btn-primary mt-2">
+    </form>
 </body>
 </html>
