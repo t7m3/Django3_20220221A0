@@ -7,6 +7,10 @@ class FriendForm(forms.ModelForm):
         model = Friend
         fields = ['name', 'mail', 'gender', 'age', 'birthday']
 
+class FindForm(forms.Form):
+    find = forms.CharField(label='Find', required=False, \
+        widget=forms.TextInput(attrs={'class':'form-control'}))
+
 class HelloForm(forms.Form):
     name = forms.CharField(label='Name', \
         widget=forms.TextInput(attrs={'class':'form-control'}))
