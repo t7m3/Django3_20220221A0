@@ -28,7 +28,7 @@ def find(request):
     if(request.method == 'POST'):
         form = FindForm(request.POST)
         find = request.POST['find']
-        data = Friend.objects.filter(name__iexact=find)
+        data = Friend.objects.filter(age__lte=int(find))
         msg = 'Result: ' + str(data.count())
     else:
         msg = 'search words...'
