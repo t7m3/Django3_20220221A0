@@ -1,3 +1,4 @@
+import imp
 from pyexpat import model
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -7,6 +8,7 @@ from .forms import FriendForm
 from django.views.generic import ListView
 from django.views.generic import DetailView
 from .forms import FindForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -28,10 +30,9 @@ def find(request):
     if(request.method == 'POST'):
         form = FindForm(request.POST)
         find = request.POST['find']
-        val = find.split()
-        data = Friend.objects \
-            .filter(age__gte=val[0]) \
-            .filter(age__lte=val[1])
+        # val = find.split()
+        data = Friend.objects.filter(Q(name__contains=find)|
+            Q(mail__contains=find))
         msg = 'Result: ' + str(data.count())
     else:
         msg = 'search words...'
