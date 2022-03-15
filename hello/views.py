@@ -30,9 +30,8 @@ def find(request):
     if(request.method == 'POST'):
         form = FindForm(request.POST)
         find = request.POST['find']
-        # val = find.split()
-        data = Friend.objects.filter(Q(name__contains=find)|
-            Q(mail__contains=find))
+        list = find.split()
+        data = Friend.objects.filter(name__in=list)
         msg = 'Result: ' + str(data.count())
     else:
         msg = 'search words...'
