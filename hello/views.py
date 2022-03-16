@@ -29,10 +29,11 @@ def index(request):
 
 def find(request):
     if(request.method == 'POST'):
+        msg = 'search result'
         form = FindForm(request.POST)
         find = request.POST['find']
         list = find.split()
-        data = Friend.objects.filter(name__in=list)
+        data = Friend.objects.all()[int(list[0]):int(list[1])]
         msg = 'Result: ' + str(data.count())
     else:
         msg = 'search words...'
