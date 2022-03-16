@@ -1,4 +1,3 @@
-import imp
 from pyexpat import model
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -10,6 +9,7 @@ from django.views.generic import DetailView
 from .forms import FindForm
 from django.db.models import Q
 from django.db.models import Count, Sum, Avg, Min, Max
+from .forms import CheckForm
 
 # Create your views here.
 
@@ -40,6 +40,22 @@ def index(request):
         'data': data,
     }
     return render(request, 'hello/index.html', params)
+
+def check(request):
+    params = {
+        'title': 'Hello',
+        'message': 'check validation.',
+        'form': CheckForm(),
+    }
+    if(request.method == 'POST'):
+        form = CheckForm(request.POST)
+        params['form'] = form
+        if(form.is_valid()):
+            params['message'] = 'OK!'
+        else:
+            params['message'] = 'no good.'
+
+    return render(request, 'hello/check.html', params)    
 
 def find(request):
     if(request.method == 'POST'):

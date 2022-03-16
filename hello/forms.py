@@ -1,6 +1,11 @@
 from dataclasses import field
+from unicodedata import name
 from django import forms
 from .models import Friend
+
+class CheckForm(forms.Form):
+    str = forms.CharField(label='Name', \
+        widget=forms.TextInput(attrs={'class':'form-control'}))
 
 class FriendForm(forms.ModelForm):
     class Meta:
