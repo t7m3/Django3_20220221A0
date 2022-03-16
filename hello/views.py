@@ -43,12 +43,13 @@ def index(request):
 
 def find(request):
     if(request.method == 'POST'):
-        msg = 'search result'
+        msg = request.POST['find']
         form = FindForm(request.POST)
-        find = request.POST['find']
-        list = find.split()
-        data = Friend.objects.all()[int(list[0]):int(list[1])]
-        msg = 'Result: ' + str(data.count())
+        sql = 'select * from hello_friend'
+        if(msg != ''):
+            sql += ' where ' + msg       
+        data = Friend.objects.raw(sql)
+        msg = sql
     else:
         msg = 'search words...'
         form = FindForm()
