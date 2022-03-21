@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello',    # ☆追加 2022-2-15
+    'hello',  # ☆追加 2022-2-15
+    'sns',  # ☆追加 2022-3-21
 ]
 
 MIDDLEWARE = [
