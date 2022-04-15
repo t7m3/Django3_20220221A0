@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 class GroupCheckForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super(GroupCheckForm, self).__init__(*args, **kwargs)
+
+        print('＊＊＊＊＊通過(GroupCheckForm1)')  # デバグ用
+        print('＊＊＊＊＊その時 user=',user)  # デバグ用
+
         public = User.objects.filter(username='public').first()
         self.fields['groups'] = forms.MultipleChoiceField(
             choices=[(item.title, item.title) for item in \
@@ -33,10 +37,10 @@ class FriendsForm(forms.Form):
     def __init__(self, user, friends=[], vals=[], *args, **kwargs):
         super(FriendsForm, self).__init__(*args, **kwargs)
         self.fields['friends'] = forms.MultipleChoiceField(
-            choices=[(item.user, item.user) for item in friends
+            choices=[(item.user, item.user) for item in friends  # ←このfriendsの中にあるもの全てが、項目として表示されるらしい。 2022-04-06
             ],
             widget=forms.CheckboxSelectMultiple(),
-            initial=vals
+            initial=vals  # これで、チェックをONにする項目が決まるらしい。valsと等しい項目だけがONになる？ 2022-04-06
         )
 
 # Group 作成フォーム
