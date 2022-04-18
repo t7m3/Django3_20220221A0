@@ -37,9 +37,22 @@ class SnsTests(TestCase):
         Message(content="finish", owner_id=usr.id, group_id=grp.id).save()
 
     def test_check(self):
-        usr = User.objects.first()
+        usr = User.objects.filter(username='test').first()
         self.assertIsNotNone(usr)
-        print("＊＊＊＊＊user= ", usr)  # デバグ用
-        msg = Message.objects.first()
-        self.assertIsNotNone(msg)
-        print("＊＊＊＊＊message= ", msg)  # デバグ用
+        
+        msg = Message.objects.filter(content="test").first()
+        self.assertIs(msg.owner_id, usr.id)
+        self.assertEqual(msg.owner.username, usr.username)
+        self.assertEqual(msg.group.title, 'public')
+
+        msgs = Message.objects.filter(content__contains="test").all()
+        self.assertIs(msgs.count(), 2)
+        print("＊＊＊＊＊messages= ", msgs)  # デバグ用
+
+        c = Message.objects.all().count()
+        self.assertIs(c, 5)
+
+        msg1 = Message.objects.all().first()
+        msg2 = Message.objects.all().last()
+        self.assertIsNot(msg1, msg2)
+
