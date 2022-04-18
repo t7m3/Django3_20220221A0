@@ -1,16 +1,14 @@
 from django.test import TestCase
 
-# Create your tests here.
+from django.contrib.auth.models import User
+from .models import Message
 
 class SnsTests(TestCase):
 
     def test_check(self):
-        x = True
-        self.assertTrue(x)
-        y = 0
-        self.assertGreater(y,0)
-        arr = [10, 20, 30]
-        self.assertIn(20, arr)
-        nn = None
-        self.assertIsNone(nn)
+        usr = User.objects.first()
+        self.assertIsNotNone(usr)
+        msg = Message.objects.first()
+        self.assertIsNotNone(msg)
+
         
