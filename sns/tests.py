@@ -1,6 +1,9 @@
-from django.test import TestCase
-
+from urllib import response
+from django.test import TestCase, Client
+from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 from .models import Group, Message
 
 class SnsTests(TestCase):
@@ -38,21 +41,15 @@ class SnsTests(TestCase):
 
     def test_check(self):
         usr = User.objects.filter(username='test').first()
-        self.assertIsNotNone(usr)
         
-        msg = Message.objects.filter(content="test").first()
-        self.assertIs(msg.owner_id, usr.id)
-        self.assertEqual(msg.owner.username, usr.username)
-        self.assertEqual(msg.group.title, 'public')
+        # access to SNS.
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 302)  # こっちは Is だと、エラー。
 
-        msgs = Message.objects.filter(content__contains="test").all()
-        self.assertIs(msgs.count(), 2)
-        print("＊＊＊＊＊messages= ", msgs)  # デバグ用
-
-        c = Message.objects.all().count()
-        self.assertIs(c, 5)
-
-        msg1 = Message.objects.all().first()
-        msg2 = Message.objects.all().last()
-        self.assertIsNot(msg1, msg2)
+        # login test account and access  to SNS.
+        self.client.force_login(usr)
+        response = self.client.get(reverse('index'))
+        self.assertIs(response.status_code, 200)  # こっちは Is なのに、だいじょうぶ。
+        self.assertContains(response, 'this is test message.')
+        
 
